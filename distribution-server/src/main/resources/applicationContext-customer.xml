@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 此处group是分组名称，也是botName，靠此group进行区分各个bot，因为发布的服务都是一个类，且ref='dmFacade' -->
+    <dubbo:reference id="waimaiDmFacade" interface="com.cooler.ai.platform.facade.DMFacade" group="waimai" version="2.0-SNAPSHOT" />
+    <dubbo:reference id="calloutDmFacade" interface="com.cooler.ai.platform.facade.DMFacade" group="callout" version="2.0-SNAPSHOT" />
+
+    <bean id="xmlDMFacadeMapService" class="com.cooler.ai.platform.service.impl.XmlDMFacadeMapServiceImpl">
+        <property name="dmFacadeMap">
+            <map>
+                <entry key="waimaiBot" value-ref="waimaiDmFacade"/>
+                <entry key="calloutBot" value-ref="calloutDmFacade"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meituan.ai.platform.dao.AllMapper" >
+
+
+
+    <resultMap id="IntentMap" type="com.cooler.ai.platform.entity.Intent" >
+        <constructor >
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="intent_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="domain_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="domain_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="dm_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="task_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="should_total_confirm" jdbcType="TINYINT" javaType="java.lang.Byte" />
+            <arg column="max_query_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="intent_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+        </constructor>
+    </resultMap>
+
+    <resultMap id="NLUIntentMap" type="com.cooler.ai.platform.entity.NLUIntent" >
+        <constructor >
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="nlu_intent_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="nlu_domain_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="nlu_intent_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="intent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="enable" jdbcType="TINYINT" javaType="java.lang.Byte" />
+            <arg column="msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+        </constructor>
+    </resultMap>
+
+    <resultMap id="NLUSlotMap" type="com.cooler.ai.platform.entity.NLUSlot" >
+        <constructor >
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="nlu_slot_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="nlu_domain_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="nlu_slot_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+        </constructor>
+    </resultMap>
+
+
+    <resultMap id="SlotMap" type="com.cooler.ai.platform.entity.Slot" >
+        <constructor >
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="slot_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="intent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="is_necessary" jdbcType="TINYINT" javaType="java.lang.Byte" />
+            <arg column="importance_degree" jdbcType="REAL" javaType="java.lang.Float" />
+            <arg column="inheritable" jdbcType="TINYINT" javaType="java.lang.Byte" />
+            <arg column="inherit_destructible" jdbcType="TINYINT" javaType="java.lang.Byte" />
+            <arg column="followed_slots" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="default_query" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+        </constructor>
+    </resultMap>
+
+    <resultMap id="SlotRelationMap" type="com.cooler.ai.platform.entity.SlotRelation" >
+        <constructor >
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="nlu_slot_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="slot_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="enable" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+        </constructor>
+    </resultMap>
+
+
+
+
+    <select id="selectAllIntent" resultMap="IntentMap" >
+        select id, intent_name, domain_id, domain_name, dm_id, task_id, should_total_confirm, max_query_count, intent_type, msg
+        from intent
+    </select>
+
+    <select id="selectAllNLUIntent" resultMap="NLUIntentMap" >
+        select id, nlu_intent_name, nlu_domain_name, nlu_intent_type, intent_id, enable, msg
+        from nlu_intent
+        where enable = 1
+    </select>
+
+    <select id="selectAllNLUSlot" resultMap="NLUSlotMap" >
+        select id, nlu_slot_name, nlu_domain_name, nlu_slot_type, msg
+        from nlu_slot
+    </select>
+
+    <select id="selectAllSlot" resultMap="SlotMap" >
+        select id, slot_name, intent_id, is_necessary, importance_degree, inheritable, inherit_destructible, followed_slots, default_query, msg
+        from slot
+    </select>
+
+    <select id="selectAllSlotRelation" resultMap="SlotRelationMap" >
+        select id, nlu_slot_id, slot_id, enable, msg
+        from slot_relation
+        where enable = 1
+    </select>
+
+</mapper>

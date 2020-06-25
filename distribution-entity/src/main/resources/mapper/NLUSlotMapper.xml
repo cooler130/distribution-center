@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cooler.ai.platform.dao.NLUSlotMapper" >
+  <resultMap id="BaseResultMap" type="com.cooler.ai.platform.entity.NLUSlot" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="nlu_slot_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="nlu_domain_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="nlu_slot_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="enable" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, nlu_slot_name, nlu_domain_name, nlu_slot_type, enable, msg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from nlu_slot
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from nlu_slot
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cooler.ai.platform.entity.NLUSlot" >
+    insert into nlu_slot (id, nlu_slot_name, nlu_domain_name, 
+      nlu_slot_type, enable, msg
+      )
+    values (#{id,jdbcType=INTEGER}, #{nluSlotName,jdbcType=VARCHAR}, #{nluDomainName,jdbcType=VARCHAR}, 
+      #{nluSlotType,jdbcType=INTEGER}, #{enable,jdbcType=INTEGER}, #{msg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cooler.ai.platform.entity.NLUSlot" >
+    insert into nlu_slot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="nluSlotName != null" >
+        nlu_slot_name,
+      </if>
+      <if test="nluDomainName != null" >
+        nlu_domain_name,
+      </if>
+      <if test="nluSlotType != null" >
+        nlu_slot_type,
+      </if>
+      <if test="enable != null" >
+        enable,
+      </if>
+      <if test="msg != null" >
+        msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="nluSlotName != null" >
+        #{nluSlotName,jdbcType=VARCHAR},
+      </if>
+      <if test="nluDomainName != null" >
+        #{nluDomainName,jdbcType=VARCHAR},
+      </if>
+      <if test="nluSlotType != null" >
+        #{nluSlotType,jdbcType=INTEGER},
+      </if>
+      <if test="enable != null" >
+        #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cooler.ai.platform.entity.NLUSlot" >
+    update nlu_slot
+    <set >
+      <if test="nluSlotName != null" >
+        nlu_slot_name = #{nluSlotName,jdbcType=VARCHAR},
+      </if>
+      <if test="nluDomainName != null" >
+        nlu_domain_name = #{nluDomainName,jdbcType=VARCHAR},
+      </if>
+      <if test="nluSlotType != null" >
+        nlu_slot_type = #{nluSlotType,jdbcType=INTEGER},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cooler.ai.platform.entity.NLUSlot" >
+    update nlu_slot
+    set nlu_slot_name = #{nluSlotName,jdbcType=VARCHAR},
+      nlu_domain_name = #{nluDomainName,jdbcType=VARCHAR},
+      nlu_slot_type = #{nluSlotType,jdbcType=INTEGER},
+      enable = #{enable,jdbcType=INTEGER},
+      msg = #{msg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 业务相关 -->
+  <select id="selectByIds" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from nlu_slot
+    where enable = 1 AND id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id,jdbcType=INTEGER}
+    </foreach>
+
+  </select>
+
+
+</mapper>

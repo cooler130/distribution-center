@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cooler.ai.platform.dao.IntentMapper" >
+  <resultMap id="BaseResultMap" type="com.cooler.ai.platform.entity.Intent" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="intent_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="domain_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="domain_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="task_names" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="intent_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, intent_name, domain_id, domain_name, task_names, intent_type, msg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from intent
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from intent
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cooler.ai.platform.entity.Intent" >
+    insert into intent (id, intent_name, domain_id, 
+      domain_name, task_names, intent_type, 
+      msg)
+    values (#{id,jdbcType=INTEGER}, #{intentName,jdbcType=VARCHAR}, #{domainId,jdbcType=INTEGER}, 
+      #{domainName,jdbcType=VARCHAR}, #{taskNames,jdbcType=VARCHAR}, #{intentType,jdbcType=INTEGER}, 
+      #{msg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cooler.ai.platform.entity.Intent" >
+    insert into intent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="intentName != null" >
+        intent_name,
+      </if>
+      <if test="domainId != null" >
+        domain_id,
+      </if>
+      <if test="domainName != null" >
+        domain_name,
+      </if>
+      <if test="taskNames != null" >
+        task_names,
+      </if>
+      <if test="intentType != null" >
+        intent_type,
+      </if>
+      <if test="msg != null" >
+        msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="intentName != null" >
+        #{intentName,jdbcType=VARCHAR},
+      </if>
+      <if test="domainId != null" >
+        #{domainId,jdbcType=INTEGER},
+      </if>
+      <if test="domainName != null" >
+        #{domainName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNames != null" >
+        #{taskNames,jdbcType=VARCHAR},
+      </if>
+      <if test="intentType != null" >
+        #{intentType,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cooler.ai.platform.entity.Intent" >
+    update intent
+    <set >
+      <if test="intentName != null" >
+        intent_name = #{intentName,jdbcType=VARCHAR},
+      </if>
+      <if test="domainId != null" >
+        domain_id = #{domainId,jdbcType=INTEGER},
+      </if>
+      <if test="domainName != null" >
+        domain_name = #{domainName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNames != null" >
+        task_names = #{taskNames,jdbcType=VARCHAR},
+      </if>
+      <if test="intentType != null" >
+        intent_type = #{intentType,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cooler.ai.platform.entity.Intent" >
+    update intent
+    set intent_name = #{intentName,jdbcType=VARCHAR},
+      domain_id = #{domainId,jdbcType=INTEGER},
+      domain_name = #{domainName,jdbcType=VARCHAR},
+      task_names = #{taskNames,jdbcType=VARCHAR},
+      intent_type = #{intentType,jdbcType=INTEGER},
+      msg = #{msg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 业务相关 -->
+  <select id="selectByIntentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from intent
+    where id = #{intentId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByTwoNames" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from intent
+    where domain_name = #{domainName,jdbcType=VARCHAR} and intent_name = #{intentName,jdbcType=VARCHAR}
+  </select>
+</mapper>

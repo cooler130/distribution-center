@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!--扫描注解，其中包括@Async -->
+    <context:component-scan base-package="com.cooler.ai"/>
+    <context:annotation-config/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:properties/jdbc.properties</value>
+                <value>classpath:properties/redis.properties</value>
+                <value>classpath:properties/params.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+    <import resource="classpath:applicationContext-provider.xml"/>                      <!-- 当使用JSONMapMaker时，此行注释掉 -->
+    <import resource="classpath:applicationContext-customer.xml"/>
+
+    <import resource="classpath:applicationContext-jdbc.xml"/>
+    <import resource="classpath:applicationContext-redis.xml"/>
+
+
+</beans>

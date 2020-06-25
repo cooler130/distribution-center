@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 控制mybatis的日志打印，解开则不打印，注释掉则打印 -->
+    <settings>
+        <setting name="logImpl" value="SLF4J"/>
+        <setting name="logPrefix" value="dao."/>
+    </settings>
+
+    <typeAliases>
+
+    </typeAliases>
+
+</configuration>
+

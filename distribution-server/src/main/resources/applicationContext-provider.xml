@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--提供方的应用名-->
+    <dubbo:application name="waimai-dm-platform">
+        <dubbo:parameter key="qos.enable" value="false" />
+        <dubbo:parameter key="qos.accept.foreign.ip" value="false" />
+        <dubbo:parameter key="qos.port" value="33333" />
+    </dubbo:application>
+
+    <!--dubbo协议默认配置，线程池为fixed，默认100，端口port外部配置（properties文件）-->
+    <dubbo:protocol id="dubbo" name="dubbo" serialization="hessian2"
+                    threadpool="fixed"
+                    threads="300"
+                    accepts="500"
+                    accesslog="${log_dir}/access.log"/>
+
+    <dubbo:registry address="${zookeeper_address}"/>
+    <!--<dubbo:registry address="zookeeper://192.168.10.20:2181?backup=192.168.10.21:2181,192.168.10.22:2181"/>-->
+
+    <!-- 此处group是分组名称，也是botName，靠此group进行区分各个bot，因为发布的服务都是一个类，且ref='dmFacade' -->
+    <dubbo:service interface="com.cooler.ai.platform.facade.DistributionCenterFacade" ref="distributionCenterFacade" group="distribution"
+                   protocol="dubbo"
+                   version="1.0-SNAPSHOT"
+                   timeout="200000"
+                   retries="0"
+                   connections="1"
+                   executes="300"
+                   loadbalance="random"
+                   cluster="failover"/>
+
+</beans>

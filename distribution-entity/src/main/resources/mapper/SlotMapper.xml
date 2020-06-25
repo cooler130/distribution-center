@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cooler.ai.platform.dao.SlotMapper" >
+  <resultMap id="BaseResultMap" type="com.cooler.ai.platform.entity.Slot" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="slot_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="intent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="is_necessary" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="importance_degree" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="inheritable" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="inherit_destructible" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="followed_slots" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="default_query" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, slot_name, intent_id, is_necessary, importance_degree, inheritable, inherit_destructible, 
+    followed_slots, default_query, msg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from slot
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from slot
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cooler.ai.platform.entity.Slot" >
+    insert into slot (id, slot_name, intent_id, 
+      is_necessary, importance_degree, inheritable, 
+      inherit_destructible, followed_slots, default_query, 
+      msg)
+    values (#{id,jdbcType=INTEGER}, #{slotName,jdbcType=VARCHAR}, #{intentId,jdbcType=INTEGER}, 
+      #{isNecessary,jdbcType=TINYINT}, #{importanceDegree,jdbcType=REAL}, #{inheritable,jdbcType=TINYINT}, 
+      #{inheritDestructible,jdbcType=TINYINT}, #{followedSlots,jdbcType=VARCHAR}, #{defaultQuery,jdbcType=VARCHAR}, 
+      #{msg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cooler.ai.platform.entity.Slot" >
+    insert into slot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="slotName != null" >
+        slot_name,
+      </if>
+      <if test="intentId != null" >
+        intent_id,
+      </if>
+      <if test="isNecessary != null" >
+        is_necessary,
+      </if>
+      <if test="importanceDegree != null" >
+        importance_degree,
+      </if>
+      <if test="inheritable != null" >
+        inheritable,
+      </if>
+      <if test="inheritDestructible != null" >
+        inherit_destructible,
+      </if>
+      <if test="followedSlots != null" >
+        followed_slots,
+      </if>
+      <if test="defaultQuery != null" >
+        default_query,
+      </if>
+      <if test="msg != null" >
+        msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="slotName != null" >
+        #{slotName,jdbcType=VARCHAR},
+      </if>
+      <if test="intentId != null" >
+        #{intentId,jdbcType=INTEGER},
+      </if>
+      <if test="isNecessary != null" >
+        #{isNecessary,jdbcType=TINYINT},
+      </if>
+      <if test="importanceDegree != null" >
+        #{importanceDegree,jdbcType=REAL},
+      </if>
+      <if test="inheritable != null" >
+        #{inheritable,jdbcType=TINYINT},
+      </if>
+      <if test="inheritDestructible != null" >
+        #{inheritDestructible,jdbcType=TINYINT},
+      </if>
+      <if test="followedSlots != null" >
+        #{followedSlots,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultQuery != null" >
+        #{defaultQuery,jdbcType=VARCHAR},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cooler.ai.platform.entity.Slot" >
+    update slot
+    <set >
+      <if test="slotName != null" >
+        slot_name = #{slotName,jdbcType=VARCHAR},
+      </if>
+      <if test="intentId != null" >
+        intent_id = #{intentId,jdbcType=INTEGER},
+      </if>
+      <if test="isNecessary != null" >
+        is_necessary = #{isNecessary,jdbcType=TINYINT},
+      </if>
+      <if test="importanceDegree != null" >
+        importance_degree = #{importanceDegree,jdbcType=REAL},
+      </if>
+      <if test="inheritable != null" >
+        inheritable = #{inheritable,jdbcType=TINYINT},
+      </if>
+      <if test="inheritDestructible != null" >
+        inherit_destructible = #{inheritDestructible,jdbcType=TINYINT},
+      </if>
+      <if test="followedSlots != null" >
+        followed_slots = #{followedSlots,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultQuery != null" >
+        default_query = #{defaultQuery,jdbcType=VARCHAR},
+      </if>
+      <if test="msg != null" >
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cooler.ai.platform.entity.Slot" >
+    update slot
+    set slot_name = #{slotName,jdbcType=VARCHAR},
+      intent_id = #{intentId,jdbcType=INTEGER},
+      is_necessary = #{isNecessary,jdbcType=TINYINT},
+      importance_degree = #{importanceDegree,jdbcType=REAL},
+      inheritable = #{inheritable,jdbcType=TINYINT},
+      inherit_destructible = #{inheritDestructible,jdbcType=TINYINT},
+      followed_slots = #{followedSlots,jdbcType=VARCHAR},
+      default_query = #{defaultQuery,jdbcType=VARCHAR},
+      msg = #{msg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 业务相关 -->
+  <select id="selectByIntentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from slot
+    where intent_id = #{intentId,jdbcType=INTEGER}
+  </select>
+
+</mapper>

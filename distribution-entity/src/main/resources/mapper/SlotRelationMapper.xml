@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cooler.ai.platform.dao.SlotRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.cooler.ai.platform.entity.SlotRelation" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="nlu_slot_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="slot_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="enable" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, nlu_slot_id, slot_id, enable, msg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from slot_relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from slot_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cooler.ai.platform.entity.SlotRelation" >
+    insert into slot_relation (id, nlu_slot_id, slot_id, 
+      enable, msg)
+    values (#{id,jdbcType=INTEGER}, #{nluSlotId,jdbcType=INTEGER}, #{slotId,jdbcType=INTEGER}, 
+      #{enable,jdbcType=INTEGER}, #{msg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cooler.ai.platform.entity.SlotRelation" >
+    insert into slot_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="nluSlotId != null" >
+        nlu_slot_id,
+      </if>
+      <if test="slotId != null" >
+        slot_id,
+      </if>
+      <if test="enable != null" >
+        enable,
+      </if>
+      <if test="msg != null" >
+        msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="nluSlotId != null" >
+        #{nluSlotId,jdbcType=INTEGER},
+      </if>
+      <if test="slotId != null" >
+        #{slotId,jdbcType=INTEGER},
+      </if>
+      <if test="enable != null" >
+        #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cooler.ai.platform.entity.SlotRelation" >
+    update slot_relation
+    <set >
+      <if test="nluSlotId != null" >
+        nlu_slot_id = #{nluSlotId,jdbcType=INTEGER},
+      </if>
+      <if test="slotId != null" >
+        slot_id = #{slotId,jdbcType=INTEGER},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="msg != null" >
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cooler.ai.platform.entity.SlotRelation" >
+    update slot_relation
+    set nlu_slot_id = #{nluSlotId,jdbcType=INTEGER},
+      slot_id = #{slotId,jdbcType=INTEGER},
+      enable = #{enable,jdbcType=INTEGER},
+      msg = #{msg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 业务相关 -->
+  <select id="selectBySlotIds" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from slot_relation
+    where slot_id in
+    <foreach collection="slotIds" item="slotId" open="(" separator="," close=")">
+      #{slotId,jdbcType=INTEGER}
+    </foreach>
+    and enable = 1
+  </select>
+
+</mapper>
