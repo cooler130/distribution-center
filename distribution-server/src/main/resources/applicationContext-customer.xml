@@ -7,12 +7,14 @@
     <!-- 此处group是分组名称，也是botName，靠此group进行区分各个bot，因为发布的服务都是一个类，且ref='dmFacade' -->
     <dubbo:reference id="waimaiDmFacade" interface="com.cooler.ai.platform.facade.DMFacade" group="waimai" version="2.0-SNAPSHOT" />
     <dubbo:reference id="calloutDmFacade" interface="com.cooler.ai.platform.facade.DMFacade" group="callout" version="2.0-SNAPSHOT" />
+    <dubbo:reference id="burouterDmFacade" interface="com.cooler.ai.platform.facade.DMFacade" group="burouter" version="2.0-SNAPSHOT" />
 
     <bean id="xmlDMFacadeMapService" class="com.cooler.ai.platform.service.impl.XmlDMFacadeMapServiceImpl">
         <property name="dmFacadeMap">
             <map>
                 <entry key="waimaiBot" value-ref="waimaiDmFacade"/>
                 <entry key="calloutBot" value-ref="calloutDmFacade"/>
+                <entry key="burouterBot" value-ref="burouterDmFacade"/>
             </map>
         </property>
     </bean>

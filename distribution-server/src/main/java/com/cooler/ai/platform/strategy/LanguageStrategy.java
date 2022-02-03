@@ -195,6 +195,7 @@ public class LanguageStrategy {
                 Intent targetIntent = intentService.selectByTwoNames(domainName, intentName);
                 if(targetIntent == null){
                     intentId = EntityConstant.NO_INTENT_ID;
+                    targetIntent = intentService.selectByIntentId(intentId);
                 }else{
                     intentId = targetIntent.getId();
                 }
